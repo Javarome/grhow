@@ -1,0 +1,27 @@
+{
+  "name": "grhow",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "test": "test"
+  },
+  "dependencies": {
+    "ts-node": "^10.8.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Javarome/grhow.git"
+  },
+  "keywords": ["grow", "how", "steps", "plan", "guide", "life"],
+  "author": "Jérôme Beau",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Javarome/grhow/issues"
+  },
+  "homepage": "https://github.com/Javarome/grhow#readme"
+}
