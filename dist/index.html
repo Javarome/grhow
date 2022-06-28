@@ -4,5 +4,17 @@
 <link href="index.css" rel="stylesheet"/>
 <body>
 <h1>gr<span class="how">how</span></h1>
+<script>
+  fetch("https://grhow-4ajpz2roya-ew.a.run.app")
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(json) {
+      console.log("received", json)
+    })
+  .catch(err => {
+    console.error(err)
+  })
+</script>
 </body>
 </html>
