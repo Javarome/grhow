@@ -1,8 +1,8 @@
 import {ClientRequest, ServerResponse} from "http"
 
 const http = require("http")
-const host = "0.0.0.0"
-const port = 8080
+const host = process.env.HOST || "0.0.0.0"
+const port = process.env.PORT || 8080
 const requestListener = (req: ClientRequest, res: ServerResponse) => {
   res.setHeader("Content-Type", "application/json");
   res.writeHead(200)

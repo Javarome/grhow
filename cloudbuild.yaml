@@ -1,3 +1,0 @@
-steps:
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/grhow-354219/github.com/javarome/grhow:$COMMIT_SHA', '--platform linux/amd64', '.']
