@@ -1,17 +1,7 @@
-import {ClientRequest, ServerResponse} from "http"
+import {createServer} from "./app"
 
-const http = require("http")
-const host = process.env.HOST || "0.0.0.0"
-const port = process.env.PORT || 8080
-const requestListener = (req: ClientRequest, res: ServerResponse) => {
-  res.setHeader("Content-Type", "application/json");
-  res.writeHead(200)
-  const message = {
-    message: "grhow"
-  }
-  res.end(JSON.stringify(message))
-}
-const server = http.createServer(requestListener)
-server.listen(port, host, () => {
-  console.log(`Server is running on http://${host}:${port}`)
+const app = createServer()
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => {
+  console.log(`Server is running on port: ${PORT})`);
 })
