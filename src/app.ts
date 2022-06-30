@@ -1,4 +1,4 @@
-import {Express, RequestHandler} from "express"
+import {Express, RequestHandler} from 'express'
 
 const express = require("express")
 
@@ -17,6 +17,6 @@ export const createServer = () => {
 
   app.use('/api/currentUser', currentUserRouter)
   app.use('/api/superUser', superUserRouter)
-  app.use('/api', (req: any, res: any) => res.status(200).send('Hello World!'))
+  app.use('/api', (req: any, res: any) => res.status(200).send('Grhow'))
   return app
 }
