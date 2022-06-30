@@ -3,18 +3,10 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="index.css" rel="stylesheet"/>
 <body>
-<h1>gr<span class="how">how</span></h1>
-<script>
-  fetch("https://grhow-server-4ajpz2roya-ew.a.run.app/api")
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(json) {
-      console.log("received", json)
-    })
-  .catch(err => {
-    console.error(err)
-  })
-</script>
+<div class="centered" id="welcome">
+  <h1>gr<span class="how">how</span></h1>
+</div>
+<div class="centered" id="home"></div>
+<script src="index.js"></script>
 </body>
 </html>

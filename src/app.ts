@@ -1,29 +1,39 @@
-import {Express, RequestHandler} from 'express'
+import {IncomingMessage, RequestListener, ServerResponse} from 'http'
 
-const express = require('express')
+interface Messages {
+  hello: string
+}
+const allMessages: {[locale: string]: Messages} = {
+  en: { hello: "Hello"},
+  fr: { hello: "Bonjour"},
+  es: { hello: "Hola"},
+  it: { hello: "Ciao"},
+  pt: { hello: "Olá"},
+  mi: { hello: "Kia Ora"},
+  ["en-au"]: { hello: "G’day"},
+  el: { hello: "γεια"},
+  sr: { hello: "Здраво"},
+  hr: { hello: "Zdravo"},
+  ru: { hello: "привет"},
+  hi: { hello: "नमस्ते"},
+  jp: { hello: "こんにちは"},
+  tr: { hello: "Merhaba"},
+  ko: { hello: "안녕하세요"},
+  sk: { hello: "Ahoj"},
+  de: { hello: "Guten tag"},
+  nl: { hello: "Hallo"},
+  po: { hello: "Cześć"},
+}
+export const requestListener: RequestListener = (req: IncomingMessage, res: ServerResponse): void => {
+  let langHeader = req.headers['accept-language'] || ""
+  const langs = langHeader.split(",")
+  const lg = langs.map(lang => lang.split(";")[0])
+  const locale = (lg[0] || "en").toLowerCase();
+  const messages = allMessages[locale] || allMessages[locale.split("-")[0]]
+  let front = "*" // https://grhow.com"
+  res.setHeader('Access-Control-Allow-Origin', front)
+  res.setHeader('Content-Type', 'application/json')
+  res.writeHead(200)
+  res.end(JSON.stringify({message: messages.hello}))
+}
 
-export const currentUserRouter: RequestHandler = (req: any, res: any) => {
-  res.status(200).json({
-    name: 'Current user'
-  })
-}
-const superUserRouter: RequestHandler = (req: any, res: any) => {
-  res.status(200).json({
-    name: 'Super user'
-  })
-}
-export const createServer = () => {
-  const app: Express = express()
-
-  app.use('/api/currentUser', currentUserRouter)
-  app.use('/api/superUser', superUserRouter)
-  app.use('/api', (req: any, res: any) => res
-    .setHeader('Access-Control-Allow-Origin', 'https://grhow.com')
-    .setHeader('Content-Type', 'application/json')
-    .status(200)
-    .send({
-      message: 'Grhow'
-    })
-  )
-  return app
-}

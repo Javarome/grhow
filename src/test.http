@@ -1,3 +1,22 @@
 ###
-GET {{server}}/api
+GET {{server}}
 
+### english
+GET {{server}}
+Accept-Language: en;q=0.5
+
+### french
+GET {{server}}
+Accept-Language: fr;q=0.5
+
+### multiple
+GET {{server}}
+Accept-Language: fr;q=0.9,en;q=0.5
+
+### complex
+GET {{server}}
+Accept-Language: en-au
+
+### complex
+GET {{server}}
+Accept-Language: el
