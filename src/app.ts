@@ -17,6 +17,9 @@ export const createServer = () => {
 
   app.use('/api/currentUser', currentUserRouter)
   app.use('/api/superUser', superUserRouter)
-  app.use('/api', (req: any, res: any) => res.status(200).send('Grhow'))
+  app.use('/api', (req: any, res: any) => res
+    .setHeader("Access-Control-Allow-Origin", "https://ghrow.com")
+    .status(200)
+    .send('Grhow'))
   return app
 }

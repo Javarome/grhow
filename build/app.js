@@ -17,7 +17,10 @@ const createServer = () => {
     const app = express();
     app.use('/api/currentUser', exports.currentUserRouter);
     app.use('/api/superUser', superUserRouter);
-    app.use('/api', (req, res) => res.status(200).send('Hello World!'));
+    app.use('/api', (req, res) => res
+        .setHeader("Access-Control-Allow-Origin", "https://ghrow.com")
+        .status(200)
+        .send('Grhow'));
     return app;
 };
 exports.createServer = createServer;
