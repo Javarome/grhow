@@ -1,7 +1,6 @@
 const welcomeEl = document.getElementById("welcome")
 const homeEl = document.getElementById("home")
-//let server = "https://grhow-server-4ajpz2roya-ew.a.run.app"
-let serverUrl = "http://localhost:3000"
+const serverUrl = "https://grhow-server-4ajpz2roya-ew.a.run.app"
 fetch(serverUrl)
   .then(function(response) {
     return response.json();
