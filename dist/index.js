@@ -2,7 +2,7 @@ const welcomeEl = document.getElementById("welcome")
 const homeEl = document.getElementById("home")
 const serverUrl = "https://grhow-server-4ajpz2roya-ew.a.run.app"
 const headers = new Headers()
-const date = new Date().toUTCString()
+const date = new Date().toLocaleString()
 headers.append("Accept", "application/json")
 headers.append("Content-Type", "application/json")
 let body = JSON.stringify({date})
