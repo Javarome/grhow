@@ -11,8 +11,6 @@
   animation: fade 1s backwards;
 }
 .centered {
-  --background: white;
-  --foreground: black;
   font-family: sans-serif;
   min-height: 100dvh;
   padding: 0;
@@ -31,6 +29,10 @@
   width: 100vw;
 }
 
+body {
+  --background: white;
+  --foreground: black;
+}
 @media (prefers-color-scheme: dark) {
   body {
     --background: black;
