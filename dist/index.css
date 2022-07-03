@@ -19,8 +19,6 @@
   align-items: center;
   height: 100%;
   justify-content: center;
-  background-color: var(--background);
-  color: var(--foreground);
 }
 #welcome {
   position: fixed;
@@ -37,6 +35,8 @@ body {
   body {
     --background: black;
     --foreground: white;
+    background-color: var(--background);
+    color: var(--foreground);
   }
 }
 
