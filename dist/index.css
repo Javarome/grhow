@@ -26,17 +26,19 @@
   left: 0;
   width: 100vw;
 }
-
-body {
+:root {
   --background: white;
   --foreground: black;
 }
+body {
+}
 @media (prefers-color-scheme: dark) {
-  body {
+  :root {
     --background: black;
     --foreground: white;
     background-color: var(--background);
     color: var(--foreground);
+    color-scheme: dark;
   }
 }
 
