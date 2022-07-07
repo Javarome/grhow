@@ -1,5 +1,8 @@
 import {IncomingMessage, RequestListener, ServerResponse} from "http"
 
+import * as https from "https"
+import {TimeZone} from "./time/TimeZone"
+
 interface Messages {
   hello(userDate: Date): string
 }
@@ -47,17 +50,53 @@ export const requestListener: RequestListener = async (req: IncomingMessage, res
     const data = Buffer.concat(buffers).toString()
     const json = JSON.parse(data)
     const dateHeader = req.headers["date"] as string
-    const userDate = json.date ? new Date(json.date) : dateHeader ? new Date(dateHeader) : new Date()
+
+    let ip = (req.headers["x-forwarded-for"] as string)?.split(",").shift() || req.socket?.remoteAddress
+    ip = "8.8.8.8"
+    let call = new Promise<string>((resolve, reject) => {
+      const options = {
+        path: `/${ip}/json`,
+        host: "ipapi.co",
+        port: 443,
+        headers: { 'User-Agent': 'nodejs-ipapi-v1.02' }
+      }
+      https.get(options, async (res) => {
+        let status = res.statusCode || 500
+        if (status >= 200 && status < 400) {
+          const bufs = [];
+          for await (const chunk of res) {
+            bufs.push(chunk);
+          }
+          const result = Buffer.concat(bufs).toString()
+          resolve(result);
+        } else {
+          reject(status)
+        }
+      }).on("error", function (e) {
+        reject(e)
+      })
+    })
+    const body = await call
+    console.log(body)
+    const ipInfo = JSON.parse(body)
+    console.log(ipInfo)
+
+    const userDate = TimeZone.convertTZ(new Date(), ipInfo.timeZone)
     const messages = allMessages[locale] || allMessages[locale.split("-")[0]]
+
     res.setHeader("Content-Type", "application/json")
     res.setHeader("Content-Language", locale)
-    payload = JSON.stringify({message: messages.hello(userDate)})
+    payload = JSON.stringify({
+      message: messages.hello(userDate),
+      ipInfo: JSON.stringify(ipInfo),
+      clientInfo: JSON.stringify(json)
+    })
   }
-  const allowedOrigins = "https://grhow.com"
+  const allowedOrigins = process.env.CORS_ORIGIN || "https://grhow.com"
   res.setHeader("Access-Control-Allow-Methods", "POST")
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept")
   res.setHeader("Access-Control-Allow-Origin", allowedOrigins)
-  res.writeHead(200);
-  res.end(payload);
+  res.writeHead(200)
+  res.end(payload)
 }
 

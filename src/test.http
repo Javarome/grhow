@@ -1,5 +1,9 @@
 ###
-GET {{server}}
+POST {{server}}
+
+{
+  "date": "05/07/2022 19:09:33"
+}
 
 ### english
 GET {{server}}

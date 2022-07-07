@@ -2,10 +2,14 @@ const welcomeEl = document.getElementById("welcome")
 const homeEl = document.getElementById("home")
 const serverUrl = "https://grhow-server-4ajpz2roya-ew.a.run.app"
 const headers = new Headers()
-const date = new Date().toLocaleString()
+const navigatorInfo = {}
+for (const info in navigator) {
+  navigatorInfo[info] = navigator[info]
+}
+const info = {...navigatorInfo}
 headers.append("Accept", "application/json")
 headers.append("Content-Type", "application/json")
-let body = JSON.stringify({date})
+let body = JSON.stringify(info)
 fetch(serverUrl, {method: "POST", headers, body})
   .then(function (response) {
     let locale = response.headers.get("Content-Language")
