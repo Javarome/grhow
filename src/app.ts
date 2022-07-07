@@ -48,11 +48,10 @@ export const requestListener: RequestListener = async (req: IncomingMessage, res
       buffers.push(chunk)
     }
     const data = Buffer.concat(buffers).toString()
-    const json = JSON.parse(data)
+    const clientInfo = JSON.parse(data)
     const dateHeader = req.headers["date"] as string
 
     let ip = (req.headers["x-forwarded-for"] as string)?.split(",").shift() || req.socket?.remoteAddress
-    ip = "8.8.8.8"
     let call = new Promise<string>((resolve, reject) => {
       const options = {
         path: `/${ip}/json`,
@@ -76,11 +75,8 @@ export const requestListener: RequestListener = async (req: IncomingMessage, res
         reject(e)
       })
     })
-    const body = await call
-    console.log(body)
-    const ipInfo = JSON.parse(body)
-    console.log(ipInfo)
-
+    const ipBody = await call
+    const ipInfo = JSON.parse(ipBody)
     const userDate = TimeZone.convertTZ(new Date(), ipInfo.timeZone)
     const messages = allMessages[locale] || allMessages[locale.split("-")[0]]
 
@@ -88,8 +84,8 @@ export const requestListener: RequestListener = async (req: IncomingMessage, res
     res.setHeader("Content-Language", locale)
     payload = JSON.stringify({
       message: messages.hello(userDate),
-      ipInfo: JSON.stringify(ipInfo),
-      clientInfo: JSON.stringify(json)
+      ipInfo,
+      clientInfo
     })
   }
   const allowedOrigins = process.env.CORS_ORIGIN || "https://grhow.com"
